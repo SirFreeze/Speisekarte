@@ -15,42 +15,14 @@ namespace Speisekarte.Controllers
         {
             using(SQLContext context = GetSQLContext())
             {
-                Meal meal = new Meal()
-                {
-                    ID = Guid.NewGuid(),
-                    Cost = 2.0,
-                    Name = "Pommes",
-                    Type = MealType.MainCourse.ToString()
-                };
-
-                Drink drink = new Drink()
-                {
-                    ID = Guid.NewGuid(),
-                    Name = "Cola",
-                    Cost = 2.00
-                };
-
-                Menu menu = new Menu()
-                {
-                    ID = Guid.NewGuid(),
-                    Cost = 10.00,
-                    Name = "Test Menu",
-                };
-
-                menu.Drinks.Add(drink);
-                menu.Meals.Add(meal);
-
-                context.Menus.Add(menu);
-                context.SaveChanges();
+               
             }
 
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Login()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
