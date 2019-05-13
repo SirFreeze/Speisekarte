@@ -6,46 +6,91 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>AddMenu</title>
+    <script>
+        $(document).ready(function () {
+            $("#submit").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/Admin/AddMenuToDb',
+                    data: { 'roleModelData': JSON.stringify(Rolemodel)}, //TODO richtige Daten
+                    success: function (data) {
+                        //TODO
+                    },
+                    error: function (data) {
+                        alert("Fehler beim Speichern der Daten.");
+                    }
+                });
+            })
+
+        })
+    </script>
 </head>
 <body>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
-    
-    //TODO
-    @using (Html.BeginForm("AddMenuToDb", "Admin")) 
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>Menu</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Cost, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Cost, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Cost, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
+    <div class="form-horizontal">
+        <h4>Menu</h4>
+        <hr />
+        <div class="form-group">
+            <p class="control-label col-md-2">Name</p>
+            <div class="col-md-10">
+                <input id="NameEdit" type="text" class="form-control" />
             </div>
         </div>
-    }
-    
+
+        <div class="form-group">
+            <p class="control-label col-md-2">Kosten</p>
+            <div class="col-md-10">
+                <input id="CostEdit" type="number" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2">Vorspeise</p>
+            <div class="col-md-10">
+                <select name="vorspeise">
+                    @foreach (string item in Model.Appetizer)
+                    {
+                        <option>@item</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2">Hauptgang</p>
+            <div class="col-md-10">
+                <select name="hauptgang">
+                    @foreach (string item in Model.MainCourse)
+                    {
+                        <option>@item</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2">Nachspeise</p>
+            <div class="col-md-10">
+                <select name="nachspeise">
+                    @foreach (string item in Model.Dessert)
+                    {
+                        <option>@item</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
     <div>
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Back to List", "Index", "Home")
     </div>
 </body>
 </html>
