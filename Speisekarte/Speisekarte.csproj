@@ -156,6 +156,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Data\Enum\MealType.cs" />
     <Compile Include="Entities\Drink.cs" />
     <Compile Include="Entities\Meal.cs" />
     <Compile Include="Entities\Menu.cs" />

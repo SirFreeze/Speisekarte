@@ -6,12 +6,10 @@ using System.Web;
 
 namespace Speisekarte.Entities
 {
-
     public partial class SQLContext
     {
         public SQLContext(DbConnection existingConnection, bool contextOwnsConnection) : base(existingConnection, contextOwnsConnection)
         {
         }
     }
-
 }
