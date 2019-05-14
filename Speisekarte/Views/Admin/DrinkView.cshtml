@@ -1,0 +1,43 @@
+﻿@using Speisekarte.Models.Admin
+@using Speisekarte.Entities
+@model DrinkModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu View</title>
+    <script>
+        $(document).ready(function () {
+
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Trinken Bearbeiten</h1>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Kosten</th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-pencil"></span></th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-remove"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Drink drink in Model.Drinks)
+                {
+                    <tr>
+                        <td>@drink.Name</td>
+                        <td>@drink.Cost</td>
+                        <td><button type="button" class="btn btn-primary editButton" onclick="location.href='@Url.Action("EditDrink", "Admin", new { id=drink.ID })'"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-danger removeButton" onclick="if(window.confirm('Trinken @drink.Name wirklich löschen?')){location.href='@Url.Action("RemoveDrink", "Admin", new { id=drink.ID })'}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

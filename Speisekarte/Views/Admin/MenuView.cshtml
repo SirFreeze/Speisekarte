@@ -8,6 +8,13 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Menu View</title>
+    <script>
+        $(document).ready(function () {
+            
+        })
+
+
+    </script>
 </head>
 <body>
     <div>
@@ -38,8 +45,8 @@
                         <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</td>
                         <td>@String.Join(", ", menu.Drinks.Select(x => x.Name))</td>
                         <td>@menu.Cost</td>
-                        <td><button type="button" class="btn btn-primary" data-id="@menu.ID"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                        <td><button type="button" class="btn btn-danger" data-id="@menu.ID"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td><button type="button" class="btn btn-primary editButton" onclick="location.href='@Url.Action("EditMenu", "Admin", new { id=menu.ID })'"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-danger removeButton" onclick="if(window.confirm('Menu @menu.Name wirklich löschen?')){location.href='@Url.Action("RemoveMenu", "Admin", new { id=menu.ID })'}"><span class="glyphicon glyphicon-remove"></span></button></td>
                     </tr>
                 }
             </tbody>

@@ -169,6 +169,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Admin\DrinkModel.cs" />
+    <Compile Include="Models\Admin\MealModel.cs" />
     <Compile Include="Models\Admin\MenuModel.cs" />
     <Compile Include="Models\Home\HomeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -217,6 +219,8 @@
     <Content Include="Views\Admin\AddMenu.cshtml" />
     <Content Include="Views\Admin\SavedModal.cshtml" />
     <Content Include="Views\Admin\MenuView.cshtml" />
+    <Content Include="Views\Admin\MealView.cshtml" />
+    <Content Include="Views\Admin\DrinkView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

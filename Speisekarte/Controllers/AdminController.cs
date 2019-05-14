@@ -100,6 +100,28 @@ namespace Speisekarte.Controllers
             return RedirectToAction("AddMenu");
         }
 
+        public ActionResult MealView()
+        {
+            MealModel model = new MealModel();
+            using (SQLContext context = GetSQLContext())
+            {
+                model.Meals = context.Meals.ToList();
+            }
+
+            return View(model);
+        }
+
+        public ActionResult DrinkView()
+        {
+            DrinkModel model = new DrinkModel();
+            using (SQLContext context = GetSQLContext())
+            {
+                model.Drinks = context.Drinks.ToList();
+            }
+
+            return View(model);
+        }
+
         public ActionResult MenuView()
         {
             HomeModel model = new HomeModel();
@@ -121,6 +143,43 @@ namespace Speisekarte.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult RemoveMenu(Guid id)
+        {
+            using (SQLContext context = GetSQLContext())
+            {
+                context.Menus.FirstOrDefault(x => x.ID == id).Drinks.Clear();
+                context.Menus.FirstOrDefault(x => x.ID == id).Meals.Clear();
+                context.Menus.Remove(context.Menus.FirstOrDefault(x => x.ID == id));
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("MenuView");
+        }
+
+        public ActionResult RemoveMeal(Guid id)
+        {
+            using (SQLContext context = GetSQLContext())
+            {
+                context.Meals.FirstOrDefault(x => x.ID == id).Menus.Clear();
+                context.Meals.Remove(context.Meals.FirstOrDefault(x => x.ID == id));
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("MealView");
+        }
+
+        public ActionResult RemoveDrink(Guid id)
+        {
+            using (SQLContext context = GetSQLContext())
+            {
+                context.Drinks.FirstOrDefault(x => x.ID == id).Menus.Clear();
+                context.Drinks.Remove(context.Drinks.FirstOrDefault(x => x.ID == id));
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("DrinkView");
         }
 
         private SQLContext GetSQLContext()

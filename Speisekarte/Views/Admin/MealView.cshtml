@@ -1,0 +1,45 @@
+﻿@using Speisekarte.Models.Admin
+@using Speisekarte.Entities
+@model MealModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu View</title>
+    <script>
+        $(document).ready(function () {
+
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Speisen Bearbeiten</h1>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Typ</th>
+                    <th>Kosten</th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-pencil"></span></th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-remove"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Meal meal in Model.Meals)
+                {
+                    <tr>
+                        <td>@meal.Name</td>
+                        <td>@meal.Type</td>
+                        <td>@meal.Cost</td>
+                        <td><button type="button" class="btn btn-primary editButton" onclick="location.href='@Url.Action("EditMeal", "Admin", new { id=meal.ID })'"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-danger removeButton" onclick="if(window.confirm('Speise @meal.Name wirklich löschen?')){location.href='@Url.Action("RemoveMeal", "Admin", new { id=meal.ID })'}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

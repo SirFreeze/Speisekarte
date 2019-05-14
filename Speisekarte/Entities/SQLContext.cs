@@ -28,6 +28,7 @@ namespace Speisekarte.Entities
                 .HasMany(e => e.Menus)
                 .WithMany(e => e.Meals)
                 .Map(m => m.ToTable("MenuMealRelation").MapLeftKey("MealID").MapRightKey("MenuID"));
+
         }
     }
 }
