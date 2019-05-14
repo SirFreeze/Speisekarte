@@ -23,7 +23,29 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    @if (Session["User"] != null)
+                    {
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Adminpanel<span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("Menus bearbeiten", "MenuView", "Admin")</li>
+                                <li>@Html.ActionLink("Meals bearbeiten", "MealView", "Admin")</li>
+                                <li>@Html.ActionLink("Drinks bearbeiten", "DrinkView", "Admin")</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (Session["User"] == null)
+                    {
+                        <li style="float:right">@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
                 </ul>
             </div>
         </div>
@@ -36,6 +58,6 @@
         </footer>
     </div>
 
-    
+
 </body>
 </html>

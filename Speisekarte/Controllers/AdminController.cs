@@ -1,5 +1,6 @@
 ﻿using Speisekarte.Data.Classes;
 using Speisekarte.Data.Enum;
+using Speisekarte.Data.Helper;
 using Speisekarte.Entities;
 using Speisekarte.Models.Admin;
 using Speisekarte.Models.Home;
@@ -17,10 +18,19 @@ namespace Speisekarte.Controllers
     {
         // GET: Admin
         [HttpPost]
-        public ActionResult Login()
+        public ActionResult Login(User user)
         {
-            //TODO
-            return View("Adminpanel");
+            using (SQLContext context = GetSQLContext())
+            {
+                if(context.Users.FirstOrDefault(x => x.Username == user.Username) != null && SecurePasswordHasher.Verify(user.Password, context.Users.FirstOrDefault(x => x.Username == user.Username).Password)){
+                    Session["User"] = user.Username;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+            }
         }
 
         public ActionResult Adminpanel()
@@ -95,7 +105,7 @@ namespace Speisekarte.Controllers
                     Description = data.Description
                 };
 
-                if(context.Menus.FirstOrDefault(x => x.ID == data.ID) != null)
+                if (context.Menus.FirstOrDefault(x => x.ID == data.ID) != null)
                 {
                     context.Menus.FirstOrDefault(x => x.ID == data.ID).Meals.Clear();
                     context.Menus.FirstOrDefault(x => x.ID == data.ID).Drinks.Clear();
@@ -184,7 +194,7 @@ namespace Speisekarte.Controllers
                 meal = context.Meals.FirstOrDefault(x => x.ID == id);
             }
 
-            return View("AddMeal",meal);
+            return View("AddMeal", meal);
         }
 
         public ActionResult EditDrink(Guid id)
