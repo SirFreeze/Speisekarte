@@ -12,17 +12,23 @@
                 var menuData = new Object();
                 menuData.Name = $("#NameEdit").val();
                 menuData.Description = $("#DescriptionEdit").val();
-                menuData.Cost = $("#CostEdit").val()
-                menuData.Appetizer = $("#AppetizerEdit option:checked").val()
-                menuData.MainCourse = $("#MainCourseEdit option:checked").val()
-                menuData.Dessert = $("#DessertEdit option:checked").val()
+                menuData.Cost = $("#CostEdit").val();
+                menuData.Appetizer = $("#AppetizerEdit option:checked").val();
+                menuData.MainCourse = $("#MainCourseEdit option:checked").val();
+                menuData.Dessert = $("#DessertEdit option:checked").val();
+                menuData.Drink = $("#DrinkEdit option:checked").val();
+                if (@Model.ID == 0) {
+                    menuData.ID = "00000000-0000-0000-0000-000000000000";
+                } else {
+                    menuData.ID = @Model.ID;
+                }
 
                 $.ajax({
                     type: "POST",
                     url: '/Admin/AddMenuToDb',
                     data: { 'menuData': JSON.stringify(menuData) },
                     success: function (data) {
-                        alert("Speichern erfolgreich.")
+                        window.location.replace("MenuView")
                     },
                     error: function (data) {
                         alert("Fehler beim Speichern der Daten.");

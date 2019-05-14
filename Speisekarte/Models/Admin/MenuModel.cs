@@ -15,6 +15,7 @@ namespace Speisekarte.Models.Admin
             Drinks = new List<string>();
         }
 
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public float Cost { get; set; }
         public List<string> Appetizer { get; set; }

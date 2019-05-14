@@ -10,6 +10,7 @@
     @using (Html.BeginForm("AddMealToDb", "Admin", FormMethod.Post)) 
     {
         @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.ID)
         
         <div class="form-horizontal">
             <h4>Meal</h4>

@@ -7,6 +7,7 @@ namespace Speisekarte.Data.Classes
 {
     public class MenuObject
     {
+        public Guid ID { get; set; }
         public string Name { get; set; }
         public float Cost { get; set; }
         public string Appetizer { get; set; }

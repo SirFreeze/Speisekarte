@@ -5,6 +5,7 @@ using Speisekarte.Models.Admin;
 using Speisekarte.Models.Home;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -56,12 +57,12 @@ namespace Speisekarte.Controllers
         {
             using (SQLContext context = GetSQLContext())
             {
-                meal.ID = Guid.NewGuid();
-                context.Meals.Add(meal);
+                meal.ID = meal.ID == new Guid() ? Guid.NewGuid() : meal.ID;
+                context.Meals.AddOrUpdate(meal);
                 context.SaveChanges();
             }
 
-            return View("AddMeal");
+            return RedirectToAction("MealView");
         }
 
         [HttpPost]
@@ -69,12 +70,12 @@ namespace Speisekarte.Controllers
         {
             using (SQLContext context = GetSQLContext())
             {
-                drink.ID = Guid.NewGuid();
-                context.Drinks.Add(drink);
+                drink.ID = drink.ID == new Guid() ? Guid.NewGuid() : drink.ID;
+                context.Drinks.AddOrUpdate(drink);
                 context.SaveChanges();
             }
 
-            return View("AddDrink");
+            return RedirectToAction("DrinkView");
         }
 
         [HttpPost]
@@ -84,20 +85,28 @@ namespace Speisekarte.Controllers
 
             using (SQLContext context = GetSQLContext())
             {
-                Menu menu = new Menu();
-                menu.ID = Guid.NewGuid();
-                menu.Cost = data.Cost;
-                menu.Name = data.Name;
-                menu.Meals = context.Meals.Where(x => x.Name == data.MainCourse || x.Name == data.Dessert || x.Name == data.Appetizer).ToList();
-                menu.Drinks = context.Drinks.Where(x => x.Name == data.Drink).ToList();
-                menu.Description = data.Description;
+                Menu menu = new Menu
+                {
+                    ID = data.ID == new Guid() ? Guid.NewGuid() : data.ID,
+                    Cost = data.Cost,
+                    Name = data.Name,
+                    Meals = context.Meals.Where(x => x.Name == data.MainCourse || x.Name == data.Dessert || x.Name == data.Appetizer).ToList(),
+                    Drinks = context.Drinks.Where(x => x.Name == data.Drink).ToList(),
+                    Description = data.Description
+                };
 
-                context.Menus.Add(menu);
+                if(context.Menus.FirstOrDefault(x => x.ID == data.ID) != null)
+                {
+                    context.Menus.FirstOrDefault(x => x.ID == data.ID).Meals.Clear();
+                    context.Menus.FirstOrDefault(x => x.ID == data.ID).Drinks.Clear();
+                }
+
+                context.Menus.AddOrUpdate(menu);
                 context.SaveChanges();
             }
 
 
-            return RedirectToAction("AddMenu");
+            return RedirectToAction("MenuView");
         }
 
         public ActionResult MealView()
@@ -143,6 +152,39 @@ namespace Speisekarte.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult EditMenu(Guid id)
+        {
+            Menu menu = new Menu();
+            using (SQLContext context = GetSQLContext())
+            {
+                menu = context.Menus.FirstOrDefault(x => x.ID == id);
+            }
+
+            return View(menu);
+        }
+
+        public ActionResult EditMeal(Guid id)
+        {
+            Meal meal = new Meal();
+            using (SQLContext context = GetSQLContext())
+            {
+                meal = context.Meals.FirstOrDefault(x => x.ID == id);
+            }
+
+            return View("AddMeal",meal);
+        }
+
+        public ActionResult EditDrink(Guid id)
+        {
+            Drink drink = new Drink();
+            using (SQLContext context = GetSQLContext())
+            {
+                drink = context.Drinks.FirstOrDefault(x => x.ID == id);
+            }
+
+            return View("AddDrink", drink);
         }
 
         public ActionResult RemoveMenu(Guid id)
