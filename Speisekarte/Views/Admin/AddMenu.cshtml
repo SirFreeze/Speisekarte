@@ -11,6 +11,7 @@
             $("#submit").click(function () {
                 var menuData = new Object();
                 menuData.Name = $("#NameEdit").val();
+                menuData.Description = $("#DescriptionEdit").val();
                 menuData.Cost = $("#CostEdit").val()
                 menuData.Appetizer = $("#AppetizerEdit option:checked").val()
                 menuData.MainCourse = $("#MainCourseEdit option:checked").val()
@@ -47,6 +48,13 @@
             <p class="control-label col-md-2">Kosten</p>
             <div class="col-md-10">
                 <input id="CostEdit" type="number" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2">Beschreibung</p>
+            <div class="col-md-10">
+                <input id="DescriptionEdit" type="text" class="form-control" />
             </div>
         </div>
 

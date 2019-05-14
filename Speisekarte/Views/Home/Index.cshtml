@@ -12,6 +12,7 @@
     {
         <div class="col-md-4">
             <h2>@menu.Name</h2>
+            <p><i>@menu.Description</i></p>
             <p>Vorspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</p>
             <p>Hauptgang: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</p>
             <p>Nachspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</p>

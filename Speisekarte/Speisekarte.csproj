@@ -216,6 +216,7 @@
     <Content Include="Views\Admin\AddDrink.cshtml" />
     <Content Include="Views\Admin\AddMenu.cshtml" />
     <Content Include="Views\Admin\SavedModal.cshtml" />
+    <Content Include="Views\Admin\MenuView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

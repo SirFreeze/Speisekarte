@@ -13,5 +13,6 @@ namespace Speisekarte.Data.Classes
         public string MainCourse { get; set; }
         public string Dessert { get; set; }
         public string Drink { get; set; }
+        public string Description { get; set; }
     }
 }

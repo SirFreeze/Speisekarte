@@ -1,0 +1,49 @@
+﻿@using Speisekarte.Models.Home
+@using Speisekarte.Data.Classes
+@using Speisekarte.Data.Enum
+@model HomeModel
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Menu View</title>
+</head>
+<body>
+    <div>
+        <h1>Menus Bearbeiten</h1>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Beschreibung</th>
+                    <th>Vorspeisen</th>
+                    <th>Hauptgang</th>
+                    <th>Nachspeisen</th>
+                    <th>Trinken</th>
+                    <th>Kosten</th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-pencil"></span></th>
+                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-remove"></span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (NonContextMenu menu in Model.Menus)
+                {
+                    <tr>
+                        <td>@menu.Name</td>
+                        <td>@menu.Description</td>
+                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</td>
+                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</td>
+                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</td>
+                        <td>@String.Join(", ", menu.Drinks.Select(x => x.Name))</td>
+                        <td>@menu.Cost</td>
+                        <td><button type="button" class="btn btn-primary" data-id="@menu.ID"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td><button type="button" class="btn btn-danger" data-id="@menu.ID"><span class="glyphicon glyphicon-remove"></span></button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

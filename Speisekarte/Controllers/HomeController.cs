@@ -25,7 +25,8 @@ namespace Speisekarte.Controllers
                         Name = menu.Name,
                         Meals = menu.Meals.ToList(),
                         Drinks = menu.Drinks.ToList(),
-                        Cost = menu.Cost
+                        Cost = menu.Cost,
+                        Description = menu.Description
                     };
                     model.Menus.Add(NonMenu);
                 } 

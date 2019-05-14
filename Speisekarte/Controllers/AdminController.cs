@@ -2,6 +2,7 @@
 using Speisekarte.Data.Enum;
 using Speisekarte.Entities;
 using Speisekarte.Models.Admin;
+using Speisekarte.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -89,6 +90,7 @@ namespace Speisekarte.Controllers
                 menu.Name = data.Name;
                 menu.Meals = context.Meals.Where(x => x.Name == data.MainCourse || x.Name == data.Dessert || x.Name == data.Appetizer).ToList();
                 menu.Drinks = context.Drinks.Where(x => x.Name == data.Drink).ToList();
+                menu.Description = data.Description;
 
                 context.Menus.Add(menu);
                 context.SaveChanges();
@@ -96,6 +98,29 @@ namespace Speisekarte.Controllers
 
 
             return RedirectToAction("AddMenu");
+        }
+
+        public ActionResult MenuView()
+        {
+            HomeModel model = new HomeModel();
+            using (SQLContext context = GetSQLContext())
+            {
+                foreach (Menu menu in context.Menus)
+                {
+                    NonContextMenu NonMenu = new NonContextMenu
+                    {
+                        Name = menu.Name,
+                        Meals = menu.Meals.ToList(),
+                        Drinks = menu.Drinks.ToList(),
+                        Cost = menu.Cost,
+                        Description = menu.Description,
+                        ID = menu.ID
+                    };
+                    model.Menus.Add(NonMenu);
+                }
+            }
+
+            return View(model);
         }
 
         private SQLContext GetSQLContext()
