@@ -33,11 +33,6 @@ namespace Speisekarte.Controllers
             }
         }
 
-        public ActionResult Adminpanel()
-        {
-            return View();
-        }
-
         public ActionResult AddMeal()
         {
             return View(new Meal());

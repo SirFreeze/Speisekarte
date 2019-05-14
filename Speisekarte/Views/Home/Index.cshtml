@@ -4,7 +4,30 @@
 @{
     ViewBag.Title = "Speisekarte";
 }
+<script>
+    var Costs = 0;
+    var Items = [];
 
+    $(document).ready(function () {
+        RefreshCosts();
+    })
+
+    function AddMenuToCard(name, cost) {
+        var item = new Object();
+        item.Name = name;
+        item.Cost = cost;
+        Items.push(item);
+        RefreshCosts();
+    }
+
+    function RefreshCosts() {
+        Costs = 0;
+        $(Items).each(function (index, item) {
+            Costs += item.Cost;
+        })
+        $("#allCosts").text(Costs);
+    }
+</script>
 <h1>Speisekarte</h1>
 <hr />
 <div class="row">
@@ -17,8 +40,36 @@
             <p>Hauptgang: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</p>
             <p>Nachspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</p>
             <p>Trinken: @String.Join(", ", menu.Drinks.Select(x => x.Name))</p>
-            <input type="button" class="btn btn-success" value="@menu.Cost €" />
+            <input type="button" class="btn btn-success" value="@menu.Cost €" onclick="AddMenuToCard('@menu.Name', @menu.Cost)" />
         </div>
     }
-
 </div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#example-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Bestellung</a>
+        </div>
+        <div class="collapse navbar-collapse" id="example-1">
+            <ul class="nav navbar-nav">
+                <li><a>Gesammtpreis: <span id="allCosts"></span>€</a></li>
+                <li>
+                    <div class="btn-group dropup">
+                        <button style="margin-top: 8px" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Warenkorb
+                        </button>
+                        <div class="dropdown-menu" id="itemDropdown">
+                            <!-- Dropdown menu links -->
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
