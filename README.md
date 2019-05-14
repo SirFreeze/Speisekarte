@@ -1,4 +1,4 @@
-https://pastebin.com/DSqLpeCB
+SQL Create Script: https://pastebin.com/DSqLpeCB
 
 Und nicht vergessen zu prüfen ob die beiden Pfade oben auch stimmen.
 
