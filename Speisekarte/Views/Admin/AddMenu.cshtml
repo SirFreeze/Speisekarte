@@ -8,6 +8,16 @@
     <title>AddMenu</title>
     <script>
         $(document).ready(function () {
+            if ("@Model.ID"  != "00000000-0000-0000-0000-000000000000") {
+                $("#NameEdit").val('@Model.Menu.Name');
+                $("#DescriptionEdit").val('@Model.Menu.Description');
+                $("#CostEdit").val('@Model.Menu.Cost');
+                $("#AppetizerEdit").val('@Model.CurrentAppetizer')
+                $("#MainCourseEdit").val('@Model.CurrentMainCourse');
+                $("#DessertEdit").val('@Model.CurrentDessert');
+                $("#DrinkEdit").val('@Model.CurrentDrink');
+            }
+
             $("#submit").click(function () {
                 var menuData = new Object();
                 menuData.Name = $("#NameEdit").val();
@@ -17,10 +27,10 @@
                 menuData.MainCourse = $("#MainCourseEdit option:checked").val();
                 menuData.Dessert = $("#DessertEdit option:checked").val();
                 menuData.Drink = $("#DrinkEdit option:checked").val();
-                if (@Model.ID == 0) {
+                if ("@Model.ID" == 0) {
                     menuData.ID = "00000000-0000-0000-0000-000000000000";
                 } else {
-                    menuData.ID = @Model.ID;
+                    menuData.ID = "@Model.ID";
                 }
 
                 $.ajax({
@@ -28,7 +38,7 @@
                     url: '/Admin/AddMenuToDb',
                     data: { 'menuData': JSON.stringify(menuData) },
                     success: function (data) {
-                        window.location.replace("MenuView")
+                        window.location.replace("/Admin/MenuView")
                     },
                     error: function (data) {
                         alert("Fehler beim Speichern der Daten.");
@@ -114,7 +124,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="submit" value="Create" class="btn btn-default" />
+                <button type="button" id="submit" class="btn btn-default" >Save</button>
             </div>
         </div>
     </div>

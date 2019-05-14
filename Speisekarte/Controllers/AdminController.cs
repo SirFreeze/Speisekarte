@@ -30,12 +30,12 @@ namespace Speisekarte.Controllers
 
         public ActionResult AddMeal()
         {
-            return View();
+            return View(new Meal());
         }
 
         public ActionResult AddDrink()
         {
-            return View();
+            return View(new Drink());
         }
 
         public ActionResult AddMenu()
@@ -99,9 +99,10 @@ namespace Speisekarte.Controllers
                 {
                     context.Menus.FirstOrDefault(x => x.ID == data.ID).Meals.Clear();
                     context.Menus.FirstOrDefault(x => x.ID == data.ID).Drinks.Clear();
+                    context.Menus.Remove(context.Menus.FirstOrDefault(x => x.ID == data.ID));
                 }
 
-                context.Menus.AddOrUpdate(menu);
+                context.Menus.Add(menu);
                 context.SaveChanges();
             }
 
@@ -156,13 +157,23 @@ namespace Speisekarte.Controllers
 
         public ActionResult EditMenu(Guid id)
         {
-            Menu menu = new Menu();
+            MenuModel model = new MenuModel();
+
             using (SQLContext context = GetSQLContext())
             {
-                menu = context.Menus.FirstOrDefault(x => x.ID == id);
+                model.Appetizer = context.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name).ToList();
+                model.MainCourse = context.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name).ToList();
+                model.Dessert = context.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name).ToList();
+                model.Drinks = context.Drinks.Select(x => x.Name).ToList();
+                model.Menu = context.Menus.FirstOrDefault(x => x.ID == id);
+                model.CurrentAppetizer = context.Menus.FirstOrDefault(x => x.ID == id).Meals.Where(x => x.Type == MealType.Appetizer.ToString()).First().Name;
+                model.CurrentDessert = context.Menus.FirstOrDefault(x => x.ID == id).Meals.Where(x => x.Type == MealType.Dessert.ToString()).First().Name;
+                model.CurrentMainCourse = context.Menus.FirstOrDefault(x => x.ID == id).Meals.Where(x => x.Type == MealType.MainCourse.ToString()).First().Name;
+                model.CurrentDrink = context.Menus.FirstOrDefault(x => x.ID == id).Drinks.First().Name;
+                model.ID = id;
             }
 
-            return View(menu);
+            return View("AddMenu", model);
         }
 
         public ActionResult EditMeal(Guid id)
