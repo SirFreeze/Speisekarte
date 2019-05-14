@@ -8,10 +8,6 @@
     <title>AddDrink</title>
 </head>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
     @using (Html.BeginForm("AddDrinkToDb", "Admin")) 
     {
         @Html.AntiForgeryToken()

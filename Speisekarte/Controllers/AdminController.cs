@@ -1,4 +1,5 @@
-﻿using Speisekarte.Data.Enum;
+﻿using Speisekarte.Data.Classes;
+using Speisekarte.Data.Enum;
 using Speisekarte.Entities;
 using Speisekarte.Models.Admin;
 using System;
@@ -44,6 +45,7 @@ namespace Speisekarte.Controllers
                 model.Appetizer = context.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name).ToList();
                 model.MainCourse = context.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name).ToList();
                 model.Dessert = context.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name).ToList();
+                model.Drinks = context.Drinks.Select(x => x.Name).ToList();
             }
             return View(model);
         }
@@ -58,7 +60,7 @@ namespace Speisekarte.Controllers
                 context.SaveChanges();
             }
 
-            return PartialView();
+            return View("AddMeal");
         }
 
         [HttpPost]
@@ -71,13 +73,29 @@ namespace Speisekarte.Controllers
                 context.SaveChanges();
             }
 
-            return PartialView();
+            return View("AddDrink");
         }
 
         [HttpPost]
-        public ActionResult AddMenuToDb()
+        public ActionResult AddMenuToDb(string menuData)
         {
-            return View();
+            MenuObject data = Newtonsoft.Json.JsonConvert.DeserializeObject<MenuObject>(menuData);
+
+            using (SQLContext context = GetSQLContext())
+            {
+                Menu menu = new Menu();
+                menu.ID = Guid.NewGuid();
+                menu.Cost = data.Cost;
+                menu.Name = data.Name;
+                menu.Meals = context.Meals.Where(x => x.Name == data.MainCourse || x.Name == data.Dessert || x.Name == data.Appetizer).ToList();
+                menu.Drinks = context.Drinks.Where(x => x.Name == data.Drink).ToList();
+
+                context.Menus.Add(menu);
+                context.SaveChanges();
+            }
+
+
+            return RedirectToAction("AddMenu");
         }
 
         private SQLContext GetSQLContext()

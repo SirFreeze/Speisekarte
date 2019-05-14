@@ -1,5 +1,7 @@
-﻿using Speisekarte.Data.Enum;
+﻿using Speisekarte.Data.Classes;
+using Speisekarte.Data.Enum;
 using Speisekarte.Entities;
+using Speisekarte.Models.Home;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,12 +15,23 @@ namespace Speisekarte.Controllers
     {
         public ActionResult Index()
         {
+            HomeModel model = new HomeModel();
             using(SQLContext context = GetSQLContext())
             {
-               
+                foreach(Menu menu in context.Menus)
+                {
+                    NonContextMenu NonMenu = new NonContextMenu
+                    {
+                        Name = menu.Name,
+                        Meals = menu.Meals.ToList(),
+                        Drinks = menu.Drinks.ToList(),
+                        Cost = menu.Cost
+                    };
+                    model.Menus.Add(NonMenu);
+                } 
             }
 
-            return View();
+            return View(model);
         }
 
         public ActionResult Login()

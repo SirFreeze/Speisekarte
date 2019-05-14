@@ -7,10 +7,6 @@
     <title>AddMeal</title>
 </head>
 <body>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/jqueryval")
-    
-    
     @using (Html.BeginForm("AddMealToDb", "Admin", FormMethod.Post)) 
     {
         @Html.AntiForgeryToken()
@@ -38,7 +34,12 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                    @*@Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <select class="form-control text-box single-line" data-val="true" data-val-required="The Type field is required." id="Type" name="Type" type="text" value="">
+                        <option>Appetizer</option>
+                        <option>MainCourse</option>
+                        <option>Dessert</option>
+                    </select>
                     @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
                 </div>
             </div>
