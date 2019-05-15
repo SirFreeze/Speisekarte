@@ -23,30 +23,30 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Beschreibung</th>
-                    <th>Vorspeisen</th>
-                    <th>Hauptgang</th>
-                    <th>Nachspeisen</th>
-                    <th>Trinken</th>
-                    <th>Kosten</th>
-                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-pencil"></span></th>
-                    <th><span style="margin-left: 13px" class="glyphicon glyphicon-remove"></span></th>
+                    <th class="viewtd">Name</th>
+                    <th class="viewtd">Beschreibung</th>
+                    <th class="viewtd">Vorspeisen</th>
+                    <th class="viewtd">Hauptgang</th>
+                    <th class="viewtd">Nachspeisen</th>
+                    <th class="viewtd">Trinken</th>
+                    <th class="viewtd">Kosten</th>
+                    <th class="viewtd"><span style="margin-left: 13px" class="glyphicon glyphicon-pencil"></span></th>
+                    <th class="viewtd"><span style="margin-left: 13px" class="glyphicon glyphicon-remove"></span></th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (NonContextMenu menu in Model.Menus)
                 {
                     <tr>
-                        <td>@menu.Name</td>
-                        <td>@menu.Description</td>
-                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</td>
-                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</td>
-                        <td>@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</td>
-                        <td>@String.Join(", ", menu.Drinks.Select(x => x.Name))</td>
-                        <td>@menu.Cost</td>
-                        <td><button type="button" class="btn btn-primary editButton" onclick="location.href='@Url.Action("EditMenu", "Admin", new { id=menu.ID })'"><span class="glyphicon glyphicon-pencil"></span></button></td>
-                        <td><button type="button" class="btn btn-danger removeButton" onclick="if(window.confirm('Menu @menu.Name wirklich löschen?')){location.href='@Url.Action("RemoveMenu", "Admin", new { id=menu.ID })'}"><span class="glyphicon glyphicon-remove"></span></button></td>
+                        <td class="viewtd">@menu.Name</td>
+                        <td class="viewtd">@menu.Description</td>
+                        <td class="viewtd">@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</td>
+                        <td class="viewtd">@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</td>
+                        <td class="viewtd">@String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</td>
+                        <td class="viewtd">@String.Join(", ", menu.Drinks.Select(x => x.Name))</td>
+                        <td class="viewtd">@menu.Cost</td>
+                        <td class="viewtd"><button type="button" class="btn btn-primary editButton" onclick="location.href='@Url.Action("EditMenu", "Admin", new { id=menu.ID })'"><span class="glyphicon glyphicon-pencil"></span></button></td>
+                        <td class="viewtd"><button type="button" class="btn btn-danger removeButton" onclick="if(window.confirm('Menu @menu.Name wirklich löschen?')){location.href='@Url.Action("RemoveMenu", "Admin", new { id=menu.ID })'}"><span class="glyphicon glyphicon-remove"></span></button></td>
                     </tr>
                 }
             </tbody>

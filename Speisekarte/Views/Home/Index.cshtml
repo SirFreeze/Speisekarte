@@ -121,17 +121,18 @@
         $("#itemTable tr").remove();
         $(Items).each(function (index, item) {
             var row = $('<tr>');
-            var nameTd = $('<td>').text(item.Name);
-            var costTd = $('<td>').text(item.Cost + "€");
-            var removebtn = $('<button>').addClass("btn btn-danger").append($('<span>').addClass("glyphicon glyphicon-remove"));
-            removebtn.css("margin-top", "10px");
+            var nameTd = $('<td>').text(item.Name).addClass("carttd");
+            var costTd = $('<td>').text(item.Cost + "€").addClass("carttd");
+            var removebtn = $('<button>').addClass("btn btn-danger").append($('<span>').addClass("glyphicon glyphicon-remove").css("position", "relative").css("top", "-5px").css("left", "-7px"));
+            removebtn.css("height", "20px").css("width", "20px");
             removebtn.click(function () {
                 Items.splice(Items.indexOf(item.Name), 1);
                 RefreshCard();
             })
+            var buttonTd = $('<td>').addClass("carttd").append(removebtn)
             $(row).append(nameTd);
             $(row).append(costTd);
-            $(row).append(removebtn);
+            $(row).append(buttonTd);
             $(table).append(row);
         })
     }
@@ -212,7 +213,7 @@
     </div>
 
 </div>
-<div style="width: 100%;"><ul id="pagination-demo" class="pagination-lg pull-right"></ul></div>
+<div style="width: 100%;"><ul style="margin-bottom:50px" id="pagination-demo" class="pagination-lg pull-right"></ul></div>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-header">
