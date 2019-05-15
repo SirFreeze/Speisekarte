@@ -1,0 +1,35 @@
+﻿.navbar {
+    background-color: #553f38;
+    border-color: black;
+}
+
+body {
+    background-color: #CAA472;
+}
+
+hr {
+    border-color: #553f38;
+}
+
+a {
+    color: #CAA472 !important;
+}
+
+    a.page-link {
+        background-color: #553f38 !important;
+        border-color: black !important;
+    }
+
+#cartbtn {
+    background-color: #553f38 !important;
+    color: #CAA472 !important;
+    border-color: #CAA472 !important;
+}
+
+.dot {
+    background-color: #e0c9ab !important;
+}
+
+.active, dot:hover {
+    background-color: #553f38 !important;
+}
