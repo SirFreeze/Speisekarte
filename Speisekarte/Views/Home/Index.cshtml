@@ -10,7 +10,51 @@
 
     $(document).ready(function () {
         RefreshCard();
+        FillSlideDotes();
+        showSlides(slideIndex);
+        Autoscroll();
     })
+
+    var slideIndex = 1;
+
+    function Autoscroll() {
+        plusSlides(1);
+        setTimeout(Autoscroll, 10000);
+    }
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+
+    function FillSlideDotes() {
+        for (var i = 1; i <= @Model.Menus.Count(); i++) {
+            var span = $('<span>').addClass("dot");
+            $(span).click(function () { currentSlide(i) });
+            $("#slidedots").append(span);
+        }
+    }
 
     function AddMenuToCard(name, cost) {
         var item = new Object();
@@ -53,8 +97,36 @@
         RefreshItems();
         $("#cartAmount").text(Items.length);
     }
+
+
 </script>
+<link href="~/Content/slide.css" rel="stylesheet" />
+
 <h1>Speisekarte</h1>
+<hr />
+
+<!-- Slideshow container -->
+<div class="slideshow-container">
+    @foreach (NonContextMenu menu in Model.Menus)
+    {
+        <div class="mySlides fade2">
+            <div style="position: relative; left:42%">
+                <h2>@menu.Name</h2>
+                <p><i>@menu.Description</i></p>
+                <p>Vorspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</p>
+                <p>Hauptgang: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</p>
+                <p>Nachspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</p>
+                <p>Trinken: @String.Join(", ", menu.Drinks.Select(x => x.Name))</p>
+                <input type="button" class="btn btn-success" value="@menu.Cost €" onclick="AddMenuToCard('@menu.Name', @menu.Cost)" />
+            </div>
+        </div>
+    }
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+<br>
+<div style="text-align:center" id="slidedots">
+</div>
 <hr />
 <div class="row">
     @foreach (NonContextMenu menu in Model.Menus)
