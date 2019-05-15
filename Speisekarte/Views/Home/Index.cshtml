@@ -9,7 +9,7 @@
     var Items = [];
 
     $(document).ready(function () {
-        RefreshCosts();
+        RefreshCard();
     })
 
     function AddMenuToCard(name, cost) {
@@ -17,7 +17,7 @@
         item.Name = name;
         item.Cost = cost;
         Items.push(item);
-        RefreshCosts();
+        RefreshCard();
     }
 
     function RefreshCosts() {
@@ -26,6 +26,32 @@
             Costs += item.Cost;
         })
         $("#allCosts").text(Costs);
+    }
+
+    function RefreshItems() {
+        var table = $("#itemTable");
+        $("#itemTable tr").remove();
+        $(Items).each(function (index, item) {
+            var row = $('<tr>');
+            var nameTd = $('<td>').text(item.Name);
+            var costTd = $('<td>').text(item.Cost + "€");
+            var removebtn = $('<button>').addClass("btn btn-danger").append($('<span>').addClass("glyphicon glyphicon-remove"));
+            removebtn.css("margin-top", "10px");
+            removebtn.click(function () {
+                Items.splice(Items.indexOf(item.Name), 1);
+                RefreshCard();
+            })
+            $(row).append(nameTd);
+            $(row).append(costTd);
+            $(row).append(removebtn);
+            $(table).append(row);
+        })
+    }
+
+    function RefreshCard() {
+        RefreshCosts();
+        RefreshItems();
+        $("#cartAmount").text(Items.length);
     }
 </script>
 <h1>Speisekarte</h1>
@@ -61,10 +87,13 @@
                 <li>
                     <div class="btn-group dropup">
                         <button style="margin-top: 8px" type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Warenkorb
+                            Warenkorb (<span id="cartAmount"></span>)
                         </button>
-                        <div class="dropdown-menu" id="itemDropdown">
-                            <!-- Dropdown menu links -->
+                        <div class="dropdown-menu" id="itemDropdown" style="width:300px; max-height:300px; overflow-y:auto">
+                            <table class="table" id="itemTable">
+                                <thead></thead>
+                                <tbody></tbody>
+                            </table>
                         </div>
                     </div>
                 </li>
