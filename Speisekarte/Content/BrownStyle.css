@@ -1,69 +1,78 @@
-﻿.navbar {
-    background-color: #553f38 !important;
-    border-color: black !important;
+﻿:root {
+    --light: #CAA472;
+    --dark: #553f38;
+    --border: black;
+    --very-light: #e0c9ab;
+    --hover-light: #6a4f46;
+}
+
+
+.navbar {
+    background-color: var(--dark) !important;
+    border-color: var(--black) !important;
 }
 
 body {
-    background-color: #CAA472 !important;
+    background-color: var(--light) !important;
 }
 
 hr {
-    border-color: #553f38 !important;
+    border-color: var(--dark) !important;
 }
 
 a {
-    color: #CAA472 !important;
+    color: var(--light) !important;
 }
 
 .dropdown-menu > li > a:hover {
-    background-color: #6a4f46 !important;
+    background-color: var(--hover-light) !important;
 }
 
 a.page-link {
-    background-color: #553f38 !important;
-    border-color: black !important;
+    background-color: var(--dark) !important;
+    border-color: var(--border) !important;
 }
 
 #cartbtn {
-    background-color: #553f38 !important;
-    color: #CAA472 !important;
-    border-color: #CAA472 !important;
+    background-color: var(--dark) !important;
+    color: var(--light) !important;
+    border-color: var(--light) !important;
 }
 
 .dot {
-    background-color: #e0c9ab !important;
+    background-color: var(--very-light) !important;
 }
 
 .active, dot:hover {
-    background-color: #553f38 !important;
+    background-color: var(--dark) !important;
 }
 
 .dropdown-menu {
-    background-color: #553f38 !important;
-    border-color: black !important;
+    background-color: var(--dark) !important;
+    border-color: var(--border) !important;
 }
 
 .table{
     margin-bottom: 0px !important;
 }
 
-.viewtd{
-    border-color: black !important;
+.viewtd {
+    border-color: var(--border) !important;
 }
 
 .carttd {
-    color: #CAA472 !important;
-    border-color: #553f38 !important;
+    color: var(--light) !important;
+    border-color: var(--dark) !important;
 }
 
 .form-control {
-    background-color: #553f38 !important;
-    border-color: black !important;
-    color: #CAA472 !important;
+    background-color: var(--dark) !important;
+    border-color: var(--border) !important;
+    color: var(--light) !important;
 }
 
 .btn-default {
-    background-color: #553f38 !important;
-    border-color: black !important;
-    color: #CAA472 !important;
+    background-color: var(--dark) !important;
+    border-color: var(--border) !important;
+    color: var(--light) !important;
 }
