@@ -13,6 +13,50 @@
         FillSlideDotes();
         showSlides(slideIndex);
         Autoscroll();
+
+        $('#pagination-demo').twbsPagination({
+            totalPages: @Html.Raw(Math.Ceiling(Model.Menus.Count() / 6f)),
+            // the current page that show on start
+            startPage: 1,
+
+            // maximum visible pages
+            visiblePages: 5,
+
+            initiateStartPageClick: true,
+
+            // template for pagination links
+            href: false,
+
+            // variable name in href template for page number
+            hrefVariable: '{{number}}',
+
+            // Text labels
+            first: 'First',
+            prev: 'Previous',
+            next: 'Next',
+            last: 'Last',
+
+            // carousel-style pagination
+            loop: false,
+
+            // callback function
+            onPageClick: function (event, page) {
+                $('.page-active').removeClass('page-active');
+                $('#page' + page).addClass('page-active');
+            },
+
+            // pagination Classes
+            paginationClass: 'pagination',
+            nextClass: 'nextitem',
+            prevClass: 'previtem',
+            lastClass: 'last',
+            firstClass: 'first',
+            pageClass: 'page',
+            activeClass: 'active',
+            disabledClass: 'disabled'
+
+        });
+
     })
 
     var slideIndex = 1;
@@ -100,8 +144,17 @@
 
 
 </script>
-<link href="~/Content/slide.css" rel="stylesheet" />
+<style>
+    .page {
+        display: none;
+    }
 
+    .page-active {
+        display: block;
+    }
+</style>
+<link href="~/Content/slide.css" rel="stylesheet" />
+<script src="~/Scripts/jquery.twbsPagination.js"></script>
 <h1>Speisekarte</h1>
 <hr />
 
@@ -128,20 +181,38 @@
 <div style="text-align:center" id="slidedots">
 </div>
 <hr />
-<div class="row">
-    @foreach (NonContextMenu menu in Model.Menus)
-    {
-        <div class="col-md-4">
-            <h2>@menu.Name</h2>
-            <p><i>@menu.Description</i></p>
-            <p>Vorspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</p>
-            <p>Hauptgang: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</p>
-            <p>Nachspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</p>
-            <p>Trinken: @String.Join(", ", menu.Drinks.Select(x => x.Name))</p>
-            <input type="button" class="btn btn-success" value="@menu.Cost €" onclick="AddMenuToCard('@menu.Name', @menu.Cost)" />
-        </div>
-    }
+
+
+
+
+
+<div class="container">
+    <div class=" page" id="page1">
+        @{int i = 1;}
+        @foreach (NonContextMenu menu in Model.Menus)
+        {
+            int page = (int)Math.Ceiling(i / 6f) + 1;
+            <div class="col-md-4">
+                <h2>@menu.Name</h2>
+                <p><i>@menu.Description</i></p>
+                <p>Vorspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Appetizer.ToString()).Select(x => x.Name))</p>
+                <p>Hauptgang: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.MainCourse.ToString()).Select(x => x.Name))</p>
+                <p>Nachspeise: @String.Join(", ", menu.Meals.Where(x => x.Type == MealType.Dessert.ToString()).Select(x => x.Name))</p>
+                <p>Trinken: @String.Join(", ", menu.Drinks.Select(x => x.Name))</p>
+                <input type="button" class="btn btn-success" value="@menu.Cost €" onclick="AddMenuToCard('@menu.Name', @menu.Cost)" />
+            </div>
+
+            if (i % 6 == 0)
+            {
+                WriteLiteral("</div>");
+                WriteLiteral("<div class='page' id='page" + page + "'>");
+            }
+            i++;
+        }
+    </div>
+    
 </div>
+<ul id="pagination-demo" class="pagination-lg pull-right"></ul>
 <nav class="navbar navbar-default navbar-fixed-bottom">
     <div class="container-fluid">
         <div class="navbar-header">
