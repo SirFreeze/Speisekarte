@@ -40,6 +40,12 @@ namespace Speisekarte.Controllers
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            Session["user"] = null;
+            return RedirectToAction("Index");
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
